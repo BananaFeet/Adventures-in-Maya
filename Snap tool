@@ -1,0 +1,22 @@
+///////////////////SnapObj Script/////////////////////////////////////////
+//This script is to "snap" two objects together in a clean manner. 
+//No constraints or connections will be made. 
+//Simply select Object A and then Object B. Run the script and Object B 
+//will assume the position and rotation of Object A. 
+//////////Created By Michelle Hill////December 11, 2015///////////////////
+
+
+//Selecting Object A and Object B.
+string $selA[0] = `ls -sl`;
+string $selB[1] = `ls -sl`;
+
+//Retrieve selected object(s) translations and rotations.
+float $trans[] = `xform -q -ws -t $selA[0]`;
+float $rot[] = `xform -q -ws -ro $selA[0]`;
+
+//Snaps Object B to Object A.
+setAttr ($selB[1] + ".translate") $trans[0] $trans[1] $trans[2]; // (node + "attribute") x y z;
+setAttr ($selB[1] + ".rotate") $rot[0] $rot[1] $rot[2];
+
+//When the procedure is successful.    
+print "Oh Snap!"
