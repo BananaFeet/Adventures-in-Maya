@@ -1,0 +1,44 @@
+#TEST! This should write out an XML document of your Maya scene.
+
+#Import xml library(?) and maya's commands
+from xml.dom.minidom import Document
+import maya.cmds as cmds
+
+#Name the document
+doc = Document()
+
+"""NOTE: XML's structure is like a tree. Root node must be established first and everything else that is 
+under the "root" is a "child." Must append in order to add a "child" to the xml document"""
+
+#Think of this like a header. Just includes scene name and (sometimes) encoding
+root_node = doc.createElement("scene information") 
+
+#Additions under the "root" must be appended (added).
+doc.appendChild(root_node)
+
+selection = cmds.ls(sl = True)
+print selection
+
+#Get attributes on selection and print.
+for object in selection:
+        print object
+        object_node = doc.createElement(str(object))
+        root_node.appendChild(object_node)
+        
+        object_translation = cmds.getAttr(object + ".translate")
+        object_node.setAttribute("translateX", str(object_translation[0][0]))
+        object_node.setAttribute("translateY", str(object_translation[0][1]))
+        object_node.setAttribute("translateZ", str(object_translation[0][2]))
+
+
+#Write out xml file to directory. Be sure to name the .xml file. Once ran, it will be in said directory.
+xml_file = open(" ", "w")#Insert directory location between quotes. 
+xml_file.write(doc.toprettyxml())
+xml_file.close()
+
+print
+print
+print
+print doc.toprettyxml()
+
+#XML text file should be found in designated directory. This only writes out a document (Not read).
