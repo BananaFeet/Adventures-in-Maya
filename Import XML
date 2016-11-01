@@ -1,0 +1,25 @@
+"""TEST! Read an xml file and bring in the primitives in the scene. Still a work in progress"""
+
+import xml.dom.minidom as Document
+import maya.cmds as cmds
+
+class readXML():
+    
+    def __init__(self):
+        
+        path = "Directory" #Input directory location
+        print(path)
+        
+        
+        #set up and parse (compile) the xml document
+        xmlFile = Document.parse(path)
+        
+        #grab elements by Tag Name inside the xml document
+        elements = xmlFile.getElementsByTagName("", "") #input string items...WIP.
+        
+        for x in elements:
+            attrs = x.attributes.key
+        
+        
+        
+inst = readXML()
