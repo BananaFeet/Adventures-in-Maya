@@ -21,8 +21,8 @@ for position in items:
     Loc = mc.spaceLocator()
 
     #Snap Locator(s) to selected object(s)
-    mc.xform(Loc[0], ws=True, t=(tx, ty, tz))
-    mc.xform(Loc[0], ws=True, ro=(rx, ry, rz))
+    mc.xform(Loc, ws=True, t=(tx, ty, tz))
+    mc.xform(Loc, ws=True, ro=(rx, ry, rz))
 
     #Success!
     print "Oh Snap!"
