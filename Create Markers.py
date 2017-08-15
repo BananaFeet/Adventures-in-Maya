@@ -1,5 +1,6 @@
 import maya.cmds as mc
 
+#Creates "markers" to selected object(s)--preferably joints.
 selection = mc.ls(sl=True)
 selJnts = selection[0:]
 
