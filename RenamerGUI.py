@@ -39,7 +39,7 @@ class RenamerUI(QtGui.QWidget):
         mc.select(self.name)
                 
         
-    #When "Alrighty" button is pressed, the name will be changed on object.
+    #When the "Enter" key is pressed, the name will be changed on object.
     def confirmName(self):
         print self.name
         #rename the object in the scene with whatever the text is in the line edit field.
