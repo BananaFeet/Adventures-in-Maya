@@ -1,34 +1,35 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Renamer.ui'
-#
-# Created by: PyQt4 UI code generator 4.11.4
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt4 import QtCore, QtGui, uic
+import maya.cmds as mc
 import sys
+from PySide import QtCore, QtGui, QtUiTools
 
 
-class Ui_MainWindow(QtGui.QWidget):
+class RenamerUI(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
-        uic.loadUi("Renamer.ui", self)
+        loader = QtUiTools.QUiLoader()
+        file = QtCore.QFile("C:\Users\michelle.hill\PycharmProjects\Learning\Renamer.ui")
+        file.open(QtCore.QFile.ReadOnly)
+        self.myWidget = loader.load(file, self)
 
-#Make the button work!
-    @QtCore.pyqtSlot(name='on_OKbttn_pressed')
-    def buttonclicked(self):
-        print "HELLO"
-        self.textEdit.setText("stuff")
+        #Add button functions
+
+
+        file.close()
+
+
+#MAYA FUNCTIONS BELOW...
+
+
+#Selection will add more text fields
+
+
 if __name__ == "__main__":
     # Set up application with any command line args
-    app = QtGui.QApplication(sys.argv)
+    #app = QtGui.QApplication(sys.argv)
 
-    ui = Ui_MainWindow()
+    ui = RenamerUI()
 
     ui.show()
 
     # Lastly, when we are done... EXIT
-    sys.exit(app.exec_())
-
-
+    #sys.exit(app.exec_())
