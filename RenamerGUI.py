@@ -13,8 +13,8 @@ class RenamerUI(QtGui.QWidget):
         #When Gui object has an event, connect it to the designated function that is 
         #listed in the "()".  
         self.myWidget.listSel.itemClicked.connect(self.listedItem)
-        #self.myWidget.listSel.itemChanged.connect(self.changeList)
-        self.myWidget.OKbttn.clicked.connect(self.confirmName)
+        self.myWidget.closeBttn.clicked.connect(self.exitWin)
+        self.myWidget.editName.returnPressed.connect(self.confirmName)
         
         #this will list the selected objects, but doesn't actually select the object
         #in the scene. This is not the same as selecting the object.
@@ -37,8 +37,7 @@ class RenamerUI(QtGui.QWidget):
         self.name = item.text()
         #select the object in the scene that has its name selected in the list.
         mc.select(self.name)
-        
-        
+                
         
     #When "Alrighty" button is pressed, the name will be changed on object.
     def confirmName(self):
@@ -56,10 +55,10 @@ class RenamerUI(QtGui.QWidget):
             currentSel.setText(self.myWidget.editName.text())
             
         
-        #Clear text field
-        
-        
-        
+    #Close window
+    def exitWin(self):
+        self.close()
+                
 
 if __name__ == "__main__":
         
