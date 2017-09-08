@@ -15,7 +15,7 @@ class RenamerUI(QtGui.QWidget):
         self.myWidget.listSel.itemClicked.connect(self.listedItem)
         self.myWidget.closeBttn.clicked.connect(self.exitWin)
         self.myWidget.editName.returnPressed.connect(self.confirmName)
-        
+        self.myWidget.addPrefix.stateChanged.connect(self.Prefix)
         #this will list the selected objects, but doesn't actually select the object
         #in the scene. This is not the same as selecting the object.
         list = mc.ls(sl=True)
@@ -24,15 +24,13 @@ class RenamerUI(QtGui.QWidget):
         for x in list:                  
             self.myWidget.listSel.addItem(x)
     
-    #ALL USER DEFINED FUNCTIONS BELOW
+    #ALL USER DEFINED FUNCTIONS BELOW**
     #All def functions within a class must use "self" to know to look for the 
     #function within the class. If a def function is outside the class, you do not 
     #need "self"
             
     #When listed item is clicked, the object in the scene needs to be selected.
-    def listedItem(self, item):
-        #does what it says...        
-        print item.text()
+    def listedItem(self, item):              
         #the name (string) of the listed item is stored to a "self.name" variable.
         self.name = item.text()
         #select the object in the scene that has its name selected in the list.
@@ -41,7 +39,6 @@ class RenamerUI(QtGui.QWidget):
         
     #When the "Enter" key is pressed, the name will be changed on object.
     def confirmName(self):
-        print self.name
         #rename the object in the scene with whatever the text is in the line edit field.
         mc.rename(self.name, self.myWidget.editName.text())
         
@@ -53,11 +50,25 @@ class RenamerUI(QtGui.QWidget):
         #text that is given in the QLineEdit widget which is named "editName" in Qt Designer. 
         for currentSel in selItems:
             currentSel.setText(self.myWidget.editName.text())
+
+    #Take current name and just add a Prefix if box is checked
+    def Prefix(self, int):
+        #if the box is checked these are the conditions. 
+        #Remember you have to add "myWidget" so it can know if you are referring to any 
+        #parts of the gui. If you don't, it will not recognize it as an attribute.
+        if self.myWidget.addPrefix.isChecked():
             
+            #This works...now make it add a prefix to a given name...
+            print "CHECK MATE!"
+        else:
+            print "Nope"
+        
         
     #Close window
     def exitWin(self):
         self.close()
+        #remember who you talking to!
+        print "Michelle's GUI has closed!"
                 
 
 if __name__ == "__main__":
