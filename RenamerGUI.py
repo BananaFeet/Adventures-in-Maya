@@ -1,7 +1,16 @@
 import maya.cmds as mc
 import sys
+import maya.OpenMayaUI as mui
 from PySide import QtCore, QtGui, QtUiTools
+import shiboken
 
+
+#Parent to maya application
+def getMayaWindow():
+    pointer = mui.MQtUtil.mainWindow()
+    if pointer is not None:
+        return shiboken.wrapInstance(long(pointer), QtGui.QWidget)
+    
 
 # Imports .ui file
 class RenamerUI(QtGui.QWidget):
@@ -19,6 +28,7 @@ class RenamerUI(QtGui.QWidget):
         self.myWidget.editName.returnPressed.connect(self.confirmName)
         self.myWidget.updateBttn.clicked.connect(self.updateList)
         self.myWidget.preBttn.clicked.connect(self.addPre)
+        self.myWidget.suffBttn.clicked.connect(self.addSuf)
 
     # ALL USER DEFINED FUNCTIONS BELOW**
     # All def functions within a class must use "self" to know to look for the
@@ -69,27 +79,27 @@ class RenamerUI(QtGui.QWidget):
     # FUNCTION FOR ADD PREFIX QLINE EDIT
     # Add prefix to selection
     def addPre(self):
-        #this literally says set the text to the string in the "preEdit" widget. 
-        self.myWidget.preEdit.setText("hello" + self.name)
-        
-       
-      
-    # Take current name and just add a Prefix if box is checked
-    # def Prefix(self):
-    # if the box is checked these are the conditions.
-    # Remember you have to add "myWidget" so it can know if you are referring to any
-    # parts of the gui. If you don't, it will not recognize it as an attribute.
-    # if self.myWidget.addPrefix.isChecked():
-
-    # This works...now make it add a prefix to a given name...
-    # print "CHECK MATE!"
-    # else:
-    # print "Nope"
-
-
-
-
-
+        #this literally says set the text to the string in the "preEdit" widget.     
+        #selects item in the list.
+        editStr = self.myWidget.listSel.selectedItems()
+        #Gets the text from the preEdit widget (QLineEdit)
+        prefix = self.myWidget.preEdit.text()
+        #add prefix
+        for add in editStr:
+            mc.rename(prefix + self.name)
+            add.setText(prefix + self.name)
+            
+    #FUNCTION FOR ADD SUFFIX QLINE EDIT
+    def addSuf(self):
+        #this literally says set the text to the string in the "suffEdit" widget.     
+        #selects item in the list.
+        editStr2 = self.myWidget.listSel.selectedItems()
+        #Gets the text from the suffEdit widget (QLineEdit)
+        suffix = self.myWidget.suffEdit.text()
+        #add suffix
+        for add in editStr2:
+            mc.rename(self.name + suffix)
+            add.setText(self.name + suffix)
 
     # Close window
     def exitWin(self):
@@ -97,6 +107,7 @@ class RenamerUI(QtGui.QWidget):
         # remember who you talking to!
         print "Michelle's GUI has closed!"
 
+#if this window exists, delete it...
 
 if __name__ == "__main__":
     ui = RenamerUI()
